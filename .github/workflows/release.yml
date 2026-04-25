@@ -135,26 +135,50 @@ jobs:
           echo "$(brew --prefix elixir)/bin" >> "$GITHUB_PATH"
           echo "$(brew --prefix erlang)/bin" >> "$GITHUB_PATH"
 
-      - name: mix deps.get
-        run: mix deps.get
-
-      - name: Build precompiled NIF tarball
-        env:
-          VASTLINT_BUILD: "true"
-          MIX_ENV: prod
+      # mix rustler_precompiled.download cannot find the module :vastlint_nif
+      # (Erlang-atom style) because it resolves "vastlint_nif" as
+      # :"Elixir.vastlint_nif". We bypass it and drive cargo/cross directly.
+      - name: Build NIF (cargo / cross)
         run: |
-          mix rustler_precompiled.download vastlint_nif \
-            --only-local \
-            --target ${{ matrix.target }} \
-            ${{ matrix.use-cross && '--use-cross' || '' }}
+          MANIFEST="vastlint-monorepo/crates/vastlint-nif/Cargo.toml"
+          if [ "${{ matrix.use-cross }}" = "true" ]; then
+            cross build --release \
+              --target ${{ matrix.target }} \
+              --manifest-path "$MANIFEST"
+          else
+            cargo build --release \
+              --target ${{ matrix.target }} \
+              --manifest-path "$MANIFEST"
+          fi
 
-      # RustlerPrecompiled writes tarballs to checksum dir; find and upload.
+      - name: Package NIF tarball
+        run: |
+          TARGET="${{ matrix.target }}"
+          VERSION=$(grep '^version' vastlint-monorepo/crates/vastlint-nif/Cargo.toml \
+            | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          NIF_VERSION=$(erl -noshell \
+            -eval 'io:format("~s",[erlang:system_info(nif_version)]),halt()')
+
+          # macOS produces a dylib; Linux produces an so. Always package as .so.
+          if [[ "$TARGET" == *"apple"* ]]; then
+            ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.dylib"
+          else
+            ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.so"
+          fi
+
+          TARBALL="vastlint_nif-v${VERSION}-nif-${NIF_VERSION}-${TARGET}.tar.gz"
+          mkdir -p /tmp/nif_pkg/lib
+          cp "$ARTIFACT" /tmp/nif_pkg/lib/vastlint_nif.so
+          tar -czf "$TARBALL" -C /tmp/nif_pkg lib/vastlint_nif.so
+          echo "Packaged: $TARBALL"
+          echo "TARBALL_NAME=$TARBALL" >> "$GITHUB_ENV"
+
       - name: Upload NIF tarball to GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload "${{ github.ref_name }}" \
-            priv/precompiled/vastlint_nif-*.tar.gz \
+            "$TARBALL_NAME" \
             --repo ${{ github.repository }} \
             --clobber
 
@@ -186,13 +210,35 @@ jobs:
       - name: mix deps.get
         run: mix deps.get
 
-      - name: Download all precompiled NIF tarballs + regenerate checksum file
+      # mix rustler_precompiled.download can't handle :vastlint_nif (Erlang-atom
+      # module name). Generate the checksum file manually by downloading each
+      # tarball from the just-created GitHub Release and hashing it.
+      - name: Regenerate checksum file from GitHub Release assets
         env:
-          # Points at the just-created GitHub Release so tarballs resolve.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mix rustler_precompiled.download vastlint_nif --all --print \
-            > checksum-vastlint_nif.exs
+          TAG="${{ github.ref_name }}"
+          CRATE="vastlint_nif"
+          {
+            echo "%{"
+            gh release view "$TAG" \
+              --repo ${{ github.repository }} \
+              --json assets \
+              --jq '.assets[].name' \
+            | grep "^${CRATE}-.*\.tar\.gz$" \
+            | while read -r FILENAME; do
+                URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/${FILENAME}"
+                SHA256=$(curl -fsSL "$URL" | sha256sum | awk '{print $1}')
+                printf '  "%s" => "sha256:%s",\n' "$FILENAME" "$SHA256"
+              done
+            echo "}"
+          } > checksum-vastlint_nif.exs
+          cat checksum-vastlint_nif.exs
+
+      - name: Compile with precompiled NIF (validates checksum file)
+        env:
+          VASTLINT_BUILD: "false"
+        run: mix compile --force
 
       - name: Commit updated checksum file
         run: |
