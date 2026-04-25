@@ -92,6 +92,19 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
+      # NIF Rust source lives in the vastlint monorepo — check it out and
+      # create the native/vastlint_nif symlink so VASTLINT_BUILD=true works.
+      - name: Checkout vastlint monorepo (NIF source)
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          repository: aleksUIX/vastlint
+          path: vastlint-monorepo
+
+      - name: Create native/vastlint_nif symlink
+        run: |
+          mkdir -p native
+          ln -sfn "$PWD/vastlint-monorepo/crates/vastlint-nif" native/vastlint_nif
+
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9
         with:
@@ -100,7 +113,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
         with:
-          workspaces: native/vastlint_nif -> target
+          workspaces: vastlint-monorepo -> target
           key: nif-${{ matrix.target }}
 
       - name: Install cross (for cross-compiled targets)

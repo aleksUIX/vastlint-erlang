@@ -18,9 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Minimum supported versions
-          - otp: "25.3"
-            elixir: "1.14"
+          # Minimum supported (ex_doc requires ~> 1.15, so floor is OTP 26 / Elixir 1.15)
+          - otp: "26.2"
+            elixir: "1.15"
           # Current stable
           - otp: "27.3"
             elixir: "1.18"
@@ -30,10 +30,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      # The NIF Rust source lives in the vastlint monorepo, not in this repo.
+      # Check it out alongside so VASTLINT_BUILD=true can run cargo build.
+      - name: Checkout vastlint monorepo (NIF source)
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
-          # vastlint-nif Rust source lives in the vastlint monorepo.
-          # We fetch it as a submodule so VASTLINT_BUILD=true works in CI.
-          submodules: false
+          repository: aleksUIX/vastlint
+          path: vastlint-monorepo
+
+      - name: Create native/vastlint_nif symlink
+        run: |
+          mkdir -p native
+          ln -sfn "$PWD/vastlint-monorepo/crates/vastlint-nif" native/vastlint_nif
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9
@@ -42,7 +51,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4  # v2.9.1
         with:
-          workspaces: native/vastlint_nif -> target
+          workspaces: vastlint-monorepo -> target
 
       - name: Set up Elixir
         uses: erlef/setup-beam@5304e04ea2b355f03681464e683d92e3b2f18451  # v1.18.2
