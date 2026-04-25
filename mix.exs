@@ -56,7 +56,7 @@ defmodule Vastlint.MixProject do
         "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
       },
       files: ~w(
-        lib src native priv
+        lib src native
         mix.exs README.md LICENSE CHANGELOG.md
         checksum-vastlint_nif.exs
       )
