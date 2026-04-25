@@ -27,10 +27,33 @@ permissions:
 # Targets must exactly match the `targets:` list in lib/vastlint_nif.ex.
 
 jobs:
+  # ── 0. Create the GitHub Release (once, before NIF builds) ────────────────
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --title "vastlint ${{ github.ref_name }}" \
+            --generate-notes \
+            --verify-tag \
+            || true   # tolerate if it already exists
+
   # ── 1. Build precompiled NIF tarballs ──────────────────────────────────────
   build-nif:
     name: NIF ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
+    needs: create-release
 
     permissions:
       contents: write   # upload release assets
@@ -105,13 +128,13 @@ jobs:
 
       # RustlerPrecompiled writes tarballs to checksum dir; find and upload.
       - name: Upload NIF tarball to GitHub Release
-        uses: svenstaro/upload-release-action@81c0b01dc0c0c82ca1c8b44eed96f72c49a61a90  # v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          file: priv/precompiled/vastlint_nif-*.tar.gz
-          file_glob: true
-          overwrite: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${{ github.ref_name }}" \
+            priv/precompiled/vastlint_nif-*.tar.gz \
+            --repo ${{ github.repository }} \
+            --clobber
 
   # ── 2. Regenerate checksum file + publish to Hex.pm ───────────────────────
   publish-hex:
