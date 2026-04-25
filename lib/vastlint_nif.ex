@@ -25,9 +25,8 @@ defmodule :vastlint_nif do
       "aarch64-apple-darwin",
       "x86_64-apple-darwin",
       "aarch64-unknown-linux-gnu",
-      "x86_64-unknown-linux-gnu",
-      "aarch64-unknown-linux-musl",
-      "x86_64-unknown-linux-musl"
+      "x86_64-unknown-linux-gnu"
+      # musl targets excluded: Rust cannot build cdylib for musl (no .so support)
     ]
 
   # Stubs — replaced at runtime when the NIF loads successfully.
