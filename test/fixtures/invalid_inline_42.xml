@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- invalid_inline_42.xml: Missing AdSystem, AdTitle, and Impression.
+     Produces multiple :error severity issues. Used in error-path tests. -->
+<VAST version="4.2">
+  <Ad id="3">
+    <InLine>
+    </InLine>
+  </Ad>
+</VAST>

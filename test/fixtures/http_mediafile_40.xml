@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http_mediafile_40.xml: Structurally valid VAST 4.0 InLine ad with an HTTP
+     (not HTTPS) MediaFile URL. Produces a :warning severity issue for the
+     insecure URL. Used to verify warnings are reported without marking valid=false,
+     and to test rule_overrides: silencing the HTTPS rule should reduce warnings. -->
+<VAST version="4.0">
+  <Ad id="4">
+    <InLine>
+      <AdSystem>Test AdServer</AdSystem>
+      <AdTitle>HTTP MediaFile Ad</AdTitle>
+      <Impression><![CDATA[https://example.com/impression]]></Impression>
+      <Creatives>
+        <Creative id="1" sequence="1">
+          <UniversalAdId idRegistry="ad-id.org">test-ad-http-001</UniversalAdId>
+          <Linear>
+            <Duration>00:00:15</Duration>
+            <MediaFiles>
+              <MediaFile delivery="progressive" type="video/mp4"
+                         width="1280" height="720"
+                         bitrate="1000" scalable="true" maintainAspectRatio="true">
+                <![CDATA[http://example.com/video.mp4]]>
+              </MediaFile>
+            </MediaFiles>
+            <VideoClicks>
+              <ClickThrough><![CDATA[https://example.com/click]]></ClickThrough>
+            </VideoClicks>
+          </Linear>
+        </Creative>
+      </Creatives>
+    </InLine>
+  </Ad>
+</VAST>

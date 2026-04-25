@@ -1,0 +1,9 @@
+# blast-deps.yaml — vastlint-erlang
+# Node ID is "vastlint" (from app: :vastlint in mix.exs)
+# NIF dependency on vastlint_nif (Rust Rustler NIF)
+# Detected from: VastlintNif module + DirtyCpu NIF loader in vastlint_nif.ex
+calls:
+  - id: vastlint_nif
+    type: nif
+    note: "Rustler DirtyCpu NIF — Elixir module VastlintNif wraps vastlint-core via Erlang NIF interface"
+    confidence: declared
