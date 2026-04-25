@@ -62,13 +62,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # macOS arm64 (Apple Silicon)
+          # macOS arm64 (Apple Silicon) — also cross-compiles x86_64 below
           - target: aarch64-apple-darwin
             os: macos-latest
 
-          # macOS x86_64 (Intel)
+          # macOS x86_64 (Intel) — cross-compiled from Apple Silicon runner
           - target: x86_64-apple-darwin
-            os: macos-13
+            os: macos-latest
 
           # Linux arm64 glibc (standard Ubuntu/Debian servers)
           - target: aarch64-unknown-linux-gnu
