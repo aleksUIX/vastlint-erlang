@@ -1,5 +1,7 @@
 defmodule :vastlint_nif do
   @moduledoc false
+  @version "0.3.6"
+
   # Internal NIF loader. Do not call this module directly — use `Vastlint`
   # (Elixir) or `vastlint` (Erlang).
   #
@@ -18,8 +20,9 @@ defmodule :vastlint_nif do
   use RustlerPrecompiled,
     otp_app: :vastlint,
     crate: "vastlint_nif",
-    base_url: "https://github.com/aleksUIX/vastlint-erlang/releases/download",
-    version: "0.3.6",
+    base_url:
+      "https://github.com/aleksUIX/vastlint-erlang/releases/download/v#{@version}",
+    version: @version,
     force_build: System.get_env("VASTLINT_BUILD") == "true",
     targets: [
       "aarch64-apple-darwin",

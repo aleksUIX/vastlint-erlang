@@ -153,17 +153,21 @@ jobs:
           NIF_VERSION=$(erl -noshell \
             -eval 'io:format("~s",[erlang:system_info(nif_version)]),halt()')
 
-          # macOS produces a dylib; Linux produces an so. Always package as .so.
+          # macOS produces a dylib; Linux produces an so.
           if [[ "$TARGET" == *"apple"* ]]; then
             ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.dylib"
           else
             ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.so"
           fi
 
-          TARBALL="vastlint_nif-v${VERSION}-nif-${NIF_VERSION}-${TARGET}.tar.gz"
-          mkdir -p /tmp/nif_pkg/lib
-          cp "$ARTIFACT" /tmp/nif_pkg/lib/vastlint_nif.so
-          tar -czf "$TARBALL" -C /tmp/nif_pkg lib/vastlint_nif.so
+          # RustlerPrecompiled naming convention:
+          #   lib{crate}-v{version}-nif-{nif_version}-{target}.so.tar.gz
+          # The .so extension is always used in the tarball name (even on macOS).
+          # Inside the tarball the file is named libvastlint_nif.so.
+          TARBALL="libvastlint_nif-v${VERSION}-nif-${NIF_VERSION}-${TARGET}.so.tar.gz"
+          mkdir -p /tmp/nif_pkg
+          cp "$ARTIFACT" /tmp/nif_pkg/libvastlint_nif.so
+          tar -czf "$TARBALL" -C /tmp/nif_pkg libvastlint_nif.so
           echo "Packaged: $TARBALL"
           echo "TARBALL_NAME=$TARBALL" >> "$GITHUB_ENV"
 
@@ -219,7 +223,7 @@ jobs:
               --repo ${{ github.repository }} \
               --json assets \
               --jq '.assets[].name' \
-            | grep "^${CRATE}-.*\.tar\.gz$" \
+            | grep "^lib${CRATE}-.*\.so\.tar\.gz$" \
             | while read -r FILENAME; do
                 URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/${FILENAME}"
                 SHA256=$(curl -fsSL "$URL" | sha256sum | awk '{print $1}')
