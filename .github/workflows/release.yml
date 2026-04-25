@@ -199,6 +199,29 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Compile from source so we never depend on downloading a precompiled NIF
+      # (avoids nif_version mismatches between build-nif and publish runners).
+      - name: Checkout vastlint monorepo (NIF source)
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          repository: aleksUIX/vastlint
+          path: vastlint-monorepo
+
+      - name: Create native/vastlint_nif symlink
+        run: |
+          mkdir -p native
+          ln -sfn "$PWD/vastlint-monorepo/crates/vastlint-nif" native/vastlint_nif
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9
+        with:
+          toolchain: stable
+
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4
+        with:
+          workspaces: vastlint-monorepo -> target
+          key: publish-hex
+
       - name: Set up Elixir
         uses: erlef/setup-beam@5304e04ea2b355f03681464e683d92e3b2f18451  # v1.18.2
         with:
@@ -208,9 +231,10 @@ jobs:
       - name: mix deps.get
         run: mix deps.get
 
-      # mix rustler_precompiled.download can't handle :vastlint_nif (Erlang-atom
-      # module name). Generate the checksum file manually by downloading each
-      # tarball from the just-created GitHub Release and hashing it.
+      # Regenerate the checksum file by downloading each tarball from the
+      # GitHub Release and computing its SHA256.  We do this manually because
+      # `mix rustler_precompiled.download` cannot resolve :vastlint_nif (an
+      # Erlang-atom module name — no "Elixir." prefix).
       - name: Regenerate checksum file from GitHub Release assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -233,11 +257,6 @@ jobs:
           } > checksum-vastlint_nif.exs
           cat checksum-vastlint_nif.exs
 
-      - name: Compile with precompiled NIF (validates checksum file)
-        env:
-          VASTLINT_BUILD: "false"
-        run: mix compile --force
-
       - name: Commit updated checksum file
         run: |
           git config user.name  "github-actions[bot]"
@@ -250,4 +269,5 @@ jobs:
       - name: Publish to Hex.pm
         env:
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+          VASTLINT_BUILD: "true"
         run: mix hex.publish --yes
