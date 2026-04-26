@@ -63,7 +63,13 @@ defmodule VastlintPropTest do
 
   property "validate/1 never raises for any binary input" do
     check all xml <- arbitrary_binary() do
-      assert (fn -> Vastlint.validate(xml) end).() != :raised
+      result = try do
+        Vastlint.validate(xml)
+        :ok
+      rescue
+        _ -> :raised
+      end
+      assert result == :ok, "Expected no exception, but validate/1 raised for input: #{inspect(xml)}"
     end
   end
 

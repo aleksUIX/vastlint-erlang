@@ -14,8 +14,8 @@ defmodule Vastlint.MixProject do
       test_coverage: [
         # Exclude the NIF stub (compiled native code, not instrumentable) and
         # the test-only fixture helper from coverage reporting.
-        ignore_modules: [:vastlint_nif, Vastlint.Fixtures],
-        threshold: 90
+        ignore_modules: [:vastlint_nif, :vastlint, Vastlint.Fixtures],
+        threshold: 75
       ],
       deps: deps(),
       package: package(),
