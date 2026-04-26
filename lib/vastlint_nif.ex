@@ -2,7 +2,7 @@ defmodule :vastlint_nif do
   @moduledoc false
   @version "0.3.6"
 
-  # Internal NIF loader. Do not call this module directly — use `Vastlint`
+  # Internal NIF loader. Do not call this module directly - use `Vastlint`
   # (Elixir) or `vastlint` (Erlang).
   #
   # This module is intentionally named with an Erlang-style atom (`:vastlint_nif`)
@@ -12,7 +12,7 @@ defmodule :vastlint_nif do
   # RustlerPrecompiled downloads the correct precompiled .so/.dylib from
   # GitHub Releases at `mix deps.get` time. If no precompiled NIF matches
   # the current platform, it falls back to compiling from source (requires
-  # a Rust toolchain — see README for instructions).
+  # a Rust toolchain - see README for instructions).
   #
   # The NIF module name ("vastlint_nif") MUST match the argument to
   # rustler::init!() in crates/vastlint-nif/src/lib.rs.
@@ -32,7 +32,7 @@ defmodule :vastlint_nif do
       # musl targets excluded: Rust cannot build cdylib for musl (no .so support)
     ]
 
-  # Stubs — replaced at runtime when the NIF loads successfully.
+  # Stubs - replaced at runtime when the NIF loads successfully.
   # If the NIF fails to load, these raise a descriptive error rather than
   # crashing with an opaque UndefinedFunctionError.
 

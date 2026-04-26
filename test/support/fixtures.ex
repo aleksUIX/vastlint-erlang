@@ -10,11 +10,11 @@ defmodule Vastlint.Fixtures do
 
   | Atom | File | Description |
   |---|---|---|
-  | `:valid_wrapper_42` | `valid_wrapper_42.xml` | Valid VAST 4.2 Wrapper — zero errors |
-  | `:valid_inline_40` | `valid_inline_40.xml` | Valid VAST 4.0 InLine with HTTPS MediaFile — zero errors |
-  | `:invalid_inline_42` | `invalid_inline_42.xml` | VAST 4.2 InLine missing required fields — multiple errors |
-  | `:malformed` | `malformed.xml` | Not well-formed XML — parse error |
-  | `:http_mediafile_40` | `http_mediafile_40.xml` | VAST 4.0 InLine with HTTP MediaFile — warnings only, valid=true |
+  | `:valid_wrapper_42` | `valid_wrapper_42.xml` | Valid VAST 4.2 Wrapper - zero errors |
+  | `:valid_inline_40` | `valid_inline_40.xml` | Valid VAST 4.0 InLine with HTTPS MediaFile - zero errors |
+  | `:invalid_inline_42` | `invalid_inline_42.xml` | VAST 4.2 InLine missing required fields - multiple errors |
+  | `:malformed` | `malformed.xml` | Not well-formed XML - parse error |
+  | `:http_mediafile_40` | `http_mediafile_40.xml` | VAST 4.0 InLine with HTTP MediaFile - warnings only, valid=true |
 
   ## Usage
 

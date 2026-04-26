@@ -1,11 +1,11 @@
-%% @doc vastlint_tests — EUnit tests for the Erlang vastlint API.
+%% @doc vastlint_tests - EUnit tests for the Erlang vastlint API.
 %%
 %% Tests both the public `vastlint` module (thin wrapper) and the `vastlint_nif`
 %% module directly, so both layers are independently verified.
 %%
 %% ## Running
 %%
-%%   # Via Mix (preferred — NIF loaded automatically):
+%%   # Via Mix (preferred - NIF loaded automatically):
 %%   mix test test/vastlint_tests.erl
 %%
 %%   # Via rebar3 (requires precompiled NIF in priv/):
@@ -34,7 +34,7 @@ invalid_inline_42() -> load_fixture("invalid_inline_42.xml").
 malformed()         -> load_fixture("malformed.xml").
 http_mediafile_40() -> load_fixture("http_mediafile_40.xml").
 
-%% ── vastlint:validate/1 — happy path ─────────────────────────────────────────
+%% ── vastlint:validate/1 - happy path ─────────────────────────────────────────
 
 validate_valid_wrapper_test() ->
     {ok, Result} = vastlint:validate(valid_wrapper_42()),
@@ -56,7 +56,7 @@ validate_issues_is_list_test() ->
     Issues = maps:get(issues, Result),
     ?assert(is_list(Issues)).
 
-%% ── vastlint:validate/1 — invalid tag ────────────────────────────────────────
+%% ── vastlint:validate/1 - invalid tag ────────────────────────────────────────
 
 validate_invalid_returns_valid_false_test() ->
     {ok, Result} = vastlint:validate(invalid_inline_42()),
@@ -87,7 +87,7 @@ validate_issue_path_binary_or_undefined_test() ->
         ?assert(is_binary(Path) orelse Path =:= undefined)
     end, maps:get(issues, Result)).
 
-%% ── vastlint:validate/1 — malformed XML ──────────────────────────────────────
+%% ── vastlint:validate/1 - malformed XML ──────────────────────────────────────
 
 validate_malformed_returns_valid_false_test() ->
     {ok, Result} = vastlint:validate(malformed()),
@@ -97,7 +97,7 @@ validate_malformed_has_errors_test() ->
     {ok, Result} = vastlint:validate(malformed()),
     ?assert(maps:get(errors, Result) > 0).
 
-%% ── vastlint:validate/1 — bad input ──────────────────────────────────────────
+%% ── vastlint:validate/1 - bad input ──────────────────────────────────────────
 
 validate_empty_binary_returns_error_test() ->
     ?assertMatch({error, _}, vastlint:validate(<<>>)).
@@ -203,7 +203,7 @@ nif_validate_empty_returns_error_test() ->
 nif_version_is_binary_test() ->
     ?assert(is_binary(vastlint_nif:version())).
 
-%% ── Concurrency — dirty scheduler safety ─────────────────────────────────────
+%% ── Concurrency - dirty scheduler safety ─────────────────────────────────────
 %%
 %% Spawns 50 Erlang processes simultaneously, each calling vastlint:validate/1.
 %% Verifies that DirtyCpu NIFs handle concurrent calls without crashing or

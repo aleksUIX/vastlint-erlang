@@ -1,4 +1,4 @@
-%% bench/vastlint_bench.erl — Erlang ad-serving benchmark for vastlint
+%% bench/vastlint_bench.erl - Erlang ad-serving benchmark for vastlint
 %%
 %% Self-contained benchmark runnable via:
 %%   erlc bench/vastlint_bench.erl && erl -noshell -s vastlint_bench main -s init stop
@@ -145,7 +145,7 @@ print_stats(Label, SamplesUs) ->
 %% ── Serial latency ────────────────────────────────────────────────────────────
 
 serial_bench(Xml, Warmup, Iters) ->
-    %% warmup — results discarded
+    %% warmup - results discarded
     _ = [vastlint_nif:validate(Xml) || _ <- lists:seq(1, Warmup)],
     %% measure
     [begin

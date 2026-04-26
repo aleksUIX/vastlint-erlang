@@ -4,7 +4,7 @@ defmodule Vastlint do
 
   Validates IAB VAST 2.0–4.3 tags against 108 rules covering required
   elements, schema structure, security, deprecated features, and CTV
-  advisories. Backed by `vastlint-core` (Rust) via a DirtyCpu NIF —
+  advisories. Backed by `vastlint-core` (Rust) via a DirtyCpu NIF -
   validation never blocks BEAM schedulers regardless of tag size.
 
   ## Quick start
@@ -33,7 +33,7 @@ defmodule Vastlint do
   ## Performance
 
   At production VAST tag sizes (17–44 KB), validation completes in
-  363–2,104 µs per tag. The NIF runs on dirty CPU schedulers — concurrent
+  363–2,104 µs per tag. The NIF runs on dirty CPU schedulers - concurrent
   calls from many BEAM processes scale linearly with available cores.
 
   See `vastlint.org` for full benchmark data.
@@ -49,7 +49,7 @@ defmodule Vastlint do
   Returns `{:ok, %Vastlint.Result{}}` on success, `{:error, reason}` on
   bad input (empty binary, non-UTF-8 bytes).
 
-  A result with `valid: false` is still `{:ok, result}` — the error tuple
+  A result with `valid: false` is still `{:ok, result}` - the error tuple
   is reserved for call-level failures, not validation failures. Use
   `result.valid` or `result.summary.errors` to check validation outcome.
 
@@ -85,7 +85,7 @@ defmodule Vastlint do
   Validate a VAST XML binary or string, raising on failure.
 
   Returns `%Vastlint.Result{}` directly. Raises `Vastlint.ValidationError`
-  if the NIF call itself fails (not if the VAST tag is invalid — a tag with
+  if the NIF call itself fails (not if the VAST tag is invalid - a tag with
   errors still returns a Result with `valid: false`).
 
   ## Example
@@ -231,7 +231,7 @@ defmodule Vastlint.ValidationError do
   @moduledoc """
   Raised by `Vastlint.validate!/1` when the NIF call itself fails.
 
-  This is NOT raised for invalid VAST tags — a tag with validation errors
+  This is NOT raised for invalid VAST tags - a tag with validation errors
   still returns a `Vastlint.Result` with `valid: false`. This exception
   indicates a system-level failure (NIF not loaded, empty input, etc.).
   """

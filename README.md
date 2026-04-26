@@ -1,4 +1,4 @@
-# vastlint — Elixir & Erlang VAST XML validator
+# vastlint - Elixir & Erlang VAST XML validator
 
 [![Hex.pm](https://img.shields.io/hexpm/v/vastlint.svg)](https://hex.pm/packages/vastlint)
 [![Hex Docs](https://img.shields.io/badge/docs-hexdocs-blue.svg)](https://hexdocs.pm/vastlint)
@@ -10,7 +10,7 @@ Validates IAB VAST 2.0–4.3 tags against 108 rules covering required elements,
 schema structure, security (HTTPS), deprecated features, and CTV advisories.
 
 Backed by [`vastlint-core`](https://github.com/aleksUIX/vastlint) (Rust) via a
-**DirtyCpu NIF** — validation never blocks BEAM schedulers regardless of tag
+**DirtyCpu NIF** - validation never blocks BEAM schedulers regardless of tag
 size or concurrency. Ships precompiled NIFs for all major platforms; no Rust
 toolchain required.
 
@@ -27,7 +27,7 @@ Precompiled NIFs are provided for:
 
 > **Note:** musl targets (Alpine Linux) are not supported for precompiled NIFs
 > because Rust cannot produce shared libraries (`cdylib`) for musl. Alpine users
-> can build from source — see below.
+> can build from source - see below.
 
 ## Installation
 
@@ -64,10 +64,10 @@ If no precompiled NIF is available for your platform (e.g. Alpine/musl), build
 from source. Requires [Rust ≥ 1.86](https://rustup.rs):
 
 ```bash
-# Elixir — force a source build
+# Elixir - force a source build
 VASTLINT_BUILD=true mix deps.compile vastlint
 
-# Erlang — compile the NIF manually then symlink or copy the result
+# Erlang - compile the NIF manually then symlink or copy the result
 cd native/vastlint_nif
 cargo build --release
 cp target/release/libvastlint_nif.so ../../priv/vastlint_nif.so   # Linux
@@ -93,7 +93,7 @@ opts = [
 ]
 {:ok, result} = Vastlint.validate(xml, opts)
 
-# Raising variant — returns Result directly, raises ValidationError on NIF failure
+# Raising variant - returns Result directly, raises ValidationError on NIF failure
 result = Vastlint.validate!(xml)
 
 # Batch validation (validates a list of VAST tags in parallel)
@@ -170,7 +170,7 @@ Benchmarked on production VAST tags (17–44 KB):
 | 30 KB | 820 µs | 1,050 µs |
 | 44 KB | 1,800 µs | 2,104 µs |
 
-NIFs run on dirty CPU schedulers — concurrent calls from many BEAM processes
+NIFs run on dirty CPU schedulers - concurrent calls from many BEAM processes
 scale linearly with available cores. A 50-process concurrency test passes with
 zero scheduler stalls.
 
@@ -191,13 +191,13 @@ Vastlint.validate/1   vastlint:validate/1
           vastlint-core     (Rust, 108 validation rules)
 ```
 
-The NIF module is registered as the Erlang atom `vastlint_nif` — the same atom
+The NIF module is registered as the Erlang atom `vastlint_nif` - the same atom
 is used by both the Elixir and Erlang loaders, so a single compiled `.so` serves
 both ecosystems without any bridging shim.
 
 ## License
 
-Apache-2.0 — see [LICENSE](LICENSE).
+Apache-2.0 - see [LICENSE](LICENSE).
 
 
 [![Hex.pm](https://img.shields.io/hexpm/v/vastlint.svg)](https://hex.pm/packages/vastlint)
@@ -210,7 +210,7 @@ Validates IAB VAST 2.0–4.3 tags against 108 rules covering required elements,
 schema structure, security (HTTPS), deprecated features, and CTV advisories.
 
 Backed by [`vastlint-core`](https://github.com/aleksUIX/vastlint) (Rust) via a
-**DirtyCpu NIF** — validation never blocks BEAM schedulers regardless of tag
+**DirtyCpu NIF** - validation never blocks BEAM schedulers regardless of tag
 size or concurrency. Ships precompiled NIFs for all major platforms; no Rust
 toolchain required.
 
@@ -268,10 +268,10 @@ If no precompiled NIF is available for your platform, build from source
 (requires [Rust ≥ 1.86](https://rustup.rs)):
 
 ```bash
-# Elixir — force a source build
+# Elixir - force a source build
 VASTLINT_BUILD=true mix deps.compile vastlint
 
-# Erlang — compile the NIF manually
+# Erlang - compile the NIF manually
 cd native/vastlint_nif
 cargo build --release
 cp target/release/libvastlint_nif.{so,dylib} ../../priv/vastlint_nif.so
@@ -296,7 +296,7 @@ opts = [
 ]
 {:ok, result} = Vastlint.validate(xml, opts)
 
-# Raising variant — returns Result directly, raises ValidationError on NIF failure
+# Raising variant - returns Result directly, raises ValidationError on NIF failure
 result = Vastlint.validate!(xml)
 
 # Library version
@@ -367,7 +367,7 @@ Benchmarked on production VAST tags (17–44 KB):
 | 30 KB | 820 µs | 1,050 µs |
 | 44 KB | 1,800 µs | 2,104 µs |
 
-NIFs run on dirty CPU schedulers — concurrent calls from many BEAM processes
+NIFs run on dirty CPU schedulers - concurrent calls from many BEAM processes
 scale linearly with available cores. A 50-process concurrency test passes with
 zero scheduler stalls.
 
@@ -385,10 +385,10 @@ Vastlint.validate/1   vastlint:validate/1
           vastlint-core     (Rust, 108 validation rules)
 ```
 
-The NIF module is registered as the Erlang atom `vastlint_nif` — the same atom
+The NIF module is registered as the Erlang atom `vastlint_nif` - the same atom
 is used by both the Elixir and Erlang loaders, so a single compiled `.so` serves
 both ecosystems without any bridging shim.
 
 ## License
 
-Apache-2.0 — see [LICENSE](LICENSE).
+Apache-2.0 - see [LICENSE](LICENSE).

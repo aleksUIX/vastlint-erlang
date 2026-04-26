@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- malformed.xml: Not well-formed XML — unclosed tag.
+<!-- malformed.xml: Not well-formed XML - unclosed tag.
      Produces a parse error regardless of VAST version.
      Used to verify the validator handles broken XML gracefully. -->
 <VAST version="4.2"><Ad><unclosed>

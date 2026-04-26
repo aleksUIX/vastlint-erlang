@@ -1,4 +1,4 @@
-%% @doc vastlint — VAST XML validator for Erlang.
+%% @doc vastlint - VAST XML validator for Erlang.
 %%
 %% Thin wrapper around the VastlintNif DirtyCpu NIF for callers using
 %% rebar3 or plain Erlang without Mix. Returns plain maps with atom keys,
@@ -41,7 +41,7 @@
 %%
 %% Returns {ok, Result} on success, {error, Reason} on bad input.
 %% Validation failures (invalid VAST) return {ok, Result} with
-%% #{valid => false} — the error tuple is for call-level failures only.
+%% #{valid => false} - the error tuple is for call-level failures only.
 -spec validate(binary()) -> {ok, map()} | {error, term()}.
 validate(Xml) ->
     vastlint_nif:validate(Xml).

@@ -1,4 +1,4 @@
-# bench/vastlint_bench.exs — BEAM ad-serving benchmark for vastlint
+# bench/vastlint_bench.exs - BEAM ad-serving benchmark for vastlint
 #
 # Models a real-world programmatic advertising pipeline:
 #   • Each BEAM process = one concurrent bid handler
@@ -41,8 +41,8 @@ report_base = Path.join(report_dir, "vastlint_#{timestamp}")
 
 defmodule Bench.Corpus do
   # Template uses two injection points:
-  #   {IMPRESSIONS} — replaced with extra <Impression> elements (valid, unlimited)
-  #   {EXT_DATA}    — replaced with padding inside <Extension> (opaque to validators)
+  #   {IMPRESSIONS} - replaced with extra <Impression> elements (valid, unlimited)
+  #   {EXT_DATA}    - replaced with padding inside <Extension> (opaque to validators)
   @base """
   <?xml version="1.0" encoding="UTF-8"?>
   <VAST version="4.2">
@@ -105,7 +105,7 @@ defmodule Bench.Corpus do
   end
 
   # Build with enough padding to hit target_bytes.
-  # Strategy: fill {EXT_DATA} with opaque <D> blobs first (inside Extension —
+  # Strategy: fill {EXT_DATA} with opaque <D> blobs first (inside Extension -
   # fully ignored by any validator), then add extra <Impression> elements
   # (valid at InLine level, unlimited count) if more bulk is needed.
   defp build_padded(id, needed) do
@@ -142,7 +142,7 @@ defmodule Bench.Stress do
     parent = self()
     ref    = make_ref()
 
-    # warmup — 1 % of run, results discarded
+    # warmup - 1 % of run, results discarded
     warmup_each = max(10, div(each, 100))
     wp = for _ <- 1..workers,
       do: spawn_link(fn ->
@@ -421,7 +421,7 @@ end
 # ── Markdown summary ──────────────────────────────────────────────────────────
 
 File.write!("#{report_base}.md", """
-# vastlint-erlang benchmark — #{timestamp}
+# vastlint-erlang benchmark - #{timestamp}
 
 Mode: #{mode_label}
 Schedulers / workers: #{System.schedulers_online()} / #{beam_workers}

@@ -86,7 +86,7 @@ jobs:
           VASTLINT_BUILD: "true"
         run: mix test test/vastlint_SUITE.erl || true
         # CT is run best via rebar3; mix test handles .erl via ct_run shim.
-        # Failures here are informational — CT results are also checked below.
+        # Failures here are informational - CT results are also checked below.
 
       - name: rebar3 eunit + ct
         env:

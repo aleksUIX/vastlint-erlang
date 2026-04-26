@@ -1,10 +1,10 @@
-%% @doc vastlint_nif — Erlang NIF loader for vastlint-core.
+%% @doc vastlint_nif - Erlang NIF loader for vastlint-core.
 %%
 %% This module is the NIF entry point for pure Erlang / rebar3 users.
 %% It loads the precompiled shared library from `priv/` at module load time
 %% and exports the three NIF functions directly.
 %%
-%% Elixir / Mix users do NOT load this module — the equivalent is
+%% Elixir / Mix users do NOT load this module - the equivalent is
 %% `lib/vastlint_nif.ex` which uses RustlerPrecompiled.  Both modules register
 %% the same Erlang atom (`vastlint_nif`) so the same `.so` / `.dylib` serves
 %% both ecosystems.
@@ -60,7 +60,7 @@ init() ->
 %% @doc Validate a VAST XML binary using default settings.
 %%
 %% Returns `{ok, Result}` on success, `{error, Reason}` on bad input.
-%% A result with `#{valid => false}` is still `{ok, Result}` — the error
+%% A result with `#{valid => false}` is still `{ok, Result}` - the error
 %% tuple is reserved for call-level failures (empty binary, non-UTF-8).
 %%
 %% Result map shape:

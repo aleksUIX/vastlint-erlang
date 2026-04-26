@@ -13,7 +13,7 @@ defmodule VastlintTest do
   @malformed_xml    Fixtures.load(:malformed)
   @http_mediafile   Fixtures.load(:http_mediafile_40)
 
-  # ── validate/1 — happy path ─────────────────────────────────────────────────
+  # ── validate/1 - happy path ─────────────────────────────────────────────────
 
   test "valid VAST 4.2 returns valid=true with zero errors" do
     assert {:ok, result} = Vastlint.validate(@valid_vast_42)
@@ -33,7 +33,7 @@ defmodule VastlintTest do
     assert error_count == 0
   end
 
-  # ── validate/1 — invalid tag ────────────────────────────────────────────────
+  # ── validate/1 - invalid tag ────────────────────────────────────────────────
 
   test "invalid VAST returns valid=false" do
     assert {:ok, result} = Vastlint.validate(@invalid_vast)
@@ -61,7 +61,7 @@ defmodule VastlintTest do
     assert issue.path == nil or is_binary(issue.path)
   end
 
-  # ── validate/1 — malformed XML ──────────────────────────────────────────────
+  # ── validate/1 - malformed XML ──────────────────────────────────────────────
 
   test "malformed XML returns valid=false" do
     assert {:ok, result} = Vastlint.validate(@malformed_xml)
@@ -73,7 +73,7 @@ defmodule VastlintTest do
     assert result.summary.errors > 0
   end
 
-  # ── validate/1 — bad input ──────────────────────────────────────────────────
+  # ── validate/1 - bad input ──────────────────────────────────────────────────
 
   test "empty binary returns error tuple" do
     assert {:error, _reason} = Vastlint.validate("")
@@ -103,7 +103,7 @@ defmodule VastlintTest do
     end
   end
 
-  # ── validate/2 — options ────────────────────────────────────────────────────
+  # ── validate/2 - options ────────────────────────────────────────────────────
 
   test "validate/2 with empty options behaves like validate/1" do
     assert {:ok, r1} = Vastlint.validate(@valid_vast_42)
@@ -117,7 +117,7 @@ defmodule VastlintTest do
     assert {:ok, base} = Vastlint.validate(@invalid_vast)
     base_errors = base.summary.errors
 
-    # Turn off every rule that fires by ID — result should have fewer errors
+    # Turn off every rule that fires by ID - result should have fewer errors
     # (We just turn one off here to prove the override mechanism works)
     first_error_id = base.issues |> Enum.find(&(&1.severity == :error)) |> Map.get(:id)
     overrides = %{first_error_id => "off"}
@@ -201,7 +201,7 @@ defmodule VastlintTest do
     assert counted == result.summary.infos
   end
 
-  # ── Concurrency — dirty scheduler safety ────────────────────────────────────
+  # ── Concurrency - dirty scheduler safety ────────────────────────────────────
   #
   # Fires many concurrent validate calls from separate BEAM processes.
   # Validates that dirty CPU schedulers handle concurrent NIF calls without

@@ -19,7 +19,7 @@ permissions:
 #
 # Each entry in the matrix builds one precompiled NIF tarball and uploads it
 # to the GitHub Release.  RustlerPrecompiled downloads the correct tarball at
-# `mix deps.get` time on the end-user's machine — no Rust toolchain required.
+# `mix deps.get` time on the end-user's machine - no Rust toolchain required.
 #
 # Tarball naming follows the RustlerPrecompiled convention:
 #   vastlint_nif-v<version>-nif-<nif_version>-<target>.tar.gz
@@ -62,11 +62,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # macOS arm64 (Apple Silicon) — also cross-compiles x86_64 below
+          # macOS arm64 (Apple Silicon) - also cross-compiles x86_64 below
           - target: aarch64-apple-darwin
             os: macos-latest
 
-          # macOS x86_64 (Intel) — cross-compiled from Apple Silicon runner
+          # macOS x86_64 (Intel) - cross-compiled from Apple Silicon runner
           - target: x86_64-apple-darwin
             os: macos-latest
 
@@ -86,7 +86,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
-      # NIF Rust source lives in the vastlint monorepo — check it out and
+      # NIF Rust source lives in the vastlint monorepo - check it out and
       # create the native/vastlint_nif symlink so VASTLINT_BUILD=true works.
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -114,14 +114,14 @@ jobs:
         if: matrix.use-cross
         run: cargo install cross --locked
 
-      - name: Set up Elixir — Linux (erlef/setup-beam)
+      - name: Set up Elixir - Linux (erlef/setup-beam)
         if: runner.os == 'Linux'
         uses: erlef/setup-beam@5304e04ea2b355f03681464e683d92e3b2f18451  # v1.18.2
         with:
           otp-version: "27.3"
           elixir-version: "1.18"
 
-      - name: Set up Elixir — macOS (brew)
+      - name: Set up Elixir - macOS (brew)
         if: runner.os == 'macOS'
         run: |
           brew update --quiet
@@ -234,7 +234,7 @@ jobs:
       # Regenerate the checksum file by downloading each tarball from the
       # GitHub Release and computing its SHA256.  We do this manually because
       # `mix rustler_precompiled.download` cannot resolve :vastlint_nif (an
-      # Erlang-atom module name — no "Elixir." prefix).
+      # Erlang-atom module name - no "Elixir." prefix).
       - name: Regenerate checksum file from GitHub Release assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

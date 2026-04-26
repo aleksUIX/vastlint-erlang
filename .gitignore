@@ -6,5 +6,5 @@ priv/native/
 # Benchmark reports (generated at runtime)
 bench/reports/
 
-# Local symlink to Rust monorepo — not portable across machines
+# Local symlink to Rust monorepo - not portable across machines
 native/vastlint_nif

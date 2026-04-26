@@ -50,7 +50,7 @@ defmodule VastlintPropTest do
 
   # ── Invariant: return shape ──────────────────────────────────────────────────
   #
-  # `validate/1` must ALWAYS return `{:ok, _}` or `{:error, _}` — never raise,
+  # `validate/1` must ALWAYS return `{:ok, _}` or `{:error, _}` - never raise,
   # never return a bare term. This holds for any binary input, including garbage.
 
   property "validate/1 always returns {:ok, _} or {:error, _} for any binary" do

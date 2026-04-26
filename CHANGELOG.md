@@ -6,7 +6,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.3.3] — 2026-04-24
+## [0.3.3] - 2026-04-24
 
 ### Breaking
 
@@ -37,7 +37,7 @@ This project follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.3.0] — 2026-03-10
+## [0.3.0] - 2026-03-10
 
 ### Added
 
@@ -47,6 +47,6 @@ This project follows [Semantic Versioning](https://semver.org/).
 - `Vastlint.Result`, `Vastlint.Issue`, `Vastlint.Summary`,
   `Vastlint.ValidationError` structs.
 - Precompiled NIFs for macOS (arm64, x86_64) and Linux (arm64, x86_64, glibc).
-- DirtyCpu NIF scheduling — never blocks BEAM schedulers.
-- Native Erlang map output — no JSON serialisation overhead.
+- DirtyCpu NIF scheduling - never blocks BEAM schedulers.
+- Native Erlang map output - no JSON serialisation overhead.
 - Erlang wrapper module `src/vastlint.erl` for rebar3 / plain Erlang callers.

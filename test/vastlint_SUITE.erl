@@ -114,7 +114,7 @@ init_per_suite(Config) ->
     %% rather than crashing with a cryptic nif_not_loaded in individual tests.
     case erlang:function_exported(vastlint_nif, version, 0) of
         true  -> ok;
-        false -> ct:fail("vastlint_nif NIF is not loaded — check priv/vastlint_nif.so")
+        false -> ct:fail("vastlint_nif NIF is not loaded - check priv/vastlint_nif.so")
     end,
     %% Stash fixture dir in CT config so all tests can use it.
     FixtureDir = filename:join(filename:dirname(?FILE), "fixtures"),
@@ -307,7 +307,7 @@ concurrent_consistent_results(Config) ->
 
 latency_under_10ms(Config) ->
     Xml = load(Config, "valid_wrapper_42.xml"),
-    %% Warm up — first call may include atom table initialisation.
+    %% Warm up - first call may include atom table initialisation.
     {ok, _} = vastlint:validate(Xml),
     T0 = erlang:monotonic_time(microsecond),
     {ok, _} = vastlint:validate(Xml),

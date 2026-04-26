@@ -45,7 +45,7 @@ defmodule Vastlint.MixProject do
     High-performance VAST XML validator for Elixir and Erlang.
 
     Validates IAB VAST 2.0–4.3 tags against 108 rules. Backed by vastlint-core
-    (Rust) via a Rustler DirtyCpu NIF — no scheduler blocking, no JSON overhead.
+    (Rust) via a Rustler DirtyCpu NIF - no scheduler blocking, no JSON overhead.
     Ships precompiled NIFs for all major platforms; no Rust toolchain required.
     """
   end
