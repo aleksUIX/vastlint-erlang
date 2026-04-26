@@ -11,12 +11,6 @@ defmodule Vastlint.MixProject do
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      test_coverage: [
-        # The NIF stub (:vastlint_nif, :vastlint) and fixture helper are not
-        # instrumentable by the built-in Mix cover tool. Threshold is set to 85%
-        # to account for those modules without requiring ExCoveralls.
-        threshold: 85
-      ],
       deps: deps(),
       package: package(),
       description: description(),
