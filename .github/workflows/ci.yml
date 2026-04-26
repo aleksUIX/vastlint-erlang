@@ -65,7 +65,7 @@ jobs:
           path: |
             deps
             _build
-          key: mix-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+          key: mix-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock', 'mix.exs') }}
           restore-keys: mix-${{ matrix.otp }}-${{ matrix.elixir }}-
 
       - name: mix deps.get
