@@ -12,10 +12,10 @@ defmodule Vastlint.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       test_coverage: [
-        # Exclude the NIF stub (compiled native code, not instrumentable) and
-        # the test-only fixture helper from coverage reporting.
-        ignore_modules: [:vastlint_nif, :vastlint, Vastlint.Fixtures],
-        threshold: 75
+        # The NIF stub (:vastlint_nif, :vastlint) and fixture helper are not
+        # instrumentable by the built-in Mix cover tool. Threshold is set to 85%
+        # to account for those modules without requiring ExCoveralls.
+        threshold: 85
       ],
       deps: deps(),
       package: package(),
