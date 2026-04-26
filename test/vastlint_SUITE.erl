@@ -1,4 +1,5 @@
-%% @doc vastlint_SUITE — Common Test integration suite for vastlint.
+%% -*- coding: utf-8 -*-
+%% @doc vastlint_SUITE - Common Test integration suite for vastlint.
 %%
 %% Integration tests that verify end-to-end behaviour: NIF loading,
 %% multi-version VAST validation, API contract, concurrent BEAM processes,
