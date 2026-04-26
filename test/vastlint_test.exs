@@ -175,18 +175,18 @@ defmodule VastlintTest do
     assert result.summary.warnings > 0 or result.summary.infos > 0
   end
 
-  test "HTTP MediaFile warning is silenced by rule_overrides" do
+  test "HTTP MediaFile issue is silenced by rule_overrides" do
     assert {:ok, base} = Vastlint.validate(@http_mediafile)
-    base_warnings = base.summary.warnings
+    # The HTTP-mediafile rule is Severity::Info (not warning).
+    base_issues = length(base.issues)
 
     https_rule_ids =
       base.issues
-      |> Enum.filter(&(&1.severity == :warning))
       |> Enum.map(& &1.id)
 
     overrides = Map.new(https_rule_ids, fn id -> {id, "off"} end)
     assert {:ok, result} = Vastlint.validate(@http_mediafile, rule_overrides: overrides)
-    assert result.summary.warnings < base_warnings
+    assert length(result.issues) < base_issues
   end
 
   test "summary.warnings == count of :warning issues" do
