@@ -79,7 +79,7 @@ jobs:
       - name: mix test (ExUnit + StreamData)
         env:
           VASTLINT_BUILD: "true"
-        run: mix test --cover
+        run: mix test
 
       - name: Common Test suite
         env:
