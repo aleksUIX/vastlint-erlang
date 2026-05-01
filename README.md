@@ -9,6 +9,8 @@ High-performance VAST XML validator for the BEAM.
 Validates IAB VAST 2.0–4.3 tags against 118 rules covering required elements,
 schema structure, security (HTTPS), deprecated features, and CTV advisories.
 
+**Rule reference:** [vastlint.org/docs/rules](https://vastlint.org/docs/rules/) · [RULES.md](RULES.md) · **Web validator:** [vastlint.org/validate](https://vastlint.org/validate)
+
 Backed by [`vastlint-core`](https://github.com/aleksUIX/vastlint) (Rust). Two
 integration modes are available depending on your fault-tolerance requirements:
 
