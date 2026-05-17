@@ -2,7 +2,7 @@
 
 Full reference documentation for every rule is at **[vastlint.org/docs/rules](https://vastlint.org/docs/rules/)**.
 
-108 rules across IAB VAST 2.0 – 4.3. The same rule set runs when you call `Vastlint.validate/1` (OTP port) or `:vastlint_nif.validate/1` (DirtyCpu NIF) — results include the rule ID, severity, line/column, and a spec reference so you can match them back to these docs.
+118 rules across IAB VAST 2.0 – 4.3. The same rule set runs when you call `Vastlint.validate/1` (OTP port) or `:vastlint_nif.validate/1` (DirtyCpu NIF) — results include the rule ID, severity, line/column, and a spec reference so you can match them back to these docs.
 
 ```elixir
 {:ok, result} = Vastlint.validate(xml)
