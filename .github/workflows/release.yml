@@ -87,7 +87,8 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
       # NIF Rust source lives in the vastlint monorepo - check it out and
-      # create the native/vastlint_nif symlink so VASTLINT_BUILD=true works.
+      # vendor the native crates into this repo so Hex packages remain
+      # self-contained and never include symlinks.
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
@@ -209,10 +210,12 @@ jobs:
           repository: aleksUIX/vastlint
           path: vastlint-monorepo
 
-      - name: Create native/vastlint_nif symlink
+      - name: Vendor native Rust sources for Hex package
         run: |
+          rm -rf native/vastlint_nif native/vastlint-core
           mkdir -p native
-          ln -sfn "$PWD/vastlint-monorepo/crates/vastlint-nif" native/vastlint_nif
+          cp -R vastlint-monorepo/crates/vastlint-nif native/vastlint_nif
+          cp -R vastlint-monorepo/crates/vastlint-core native/vastlint-core
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9
