@@ -1,7 +1,7 @@
 defmodule Vastlint.MixProject do
   use Mix.Project
 
-  @version "0.4.21"
+  @version "0.4.22"
   @source_url "https://github.com/aleksUIX/vastlint-erlang"
 
   def project do
