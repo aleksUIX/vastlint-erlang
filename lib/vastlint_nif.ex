@@ -1,6 +1,6 @@
 defmodule :vastlint_nif do
   @moduledoc false
-  @version "0.3.6"
+  @version "0.4.23"
 
   # Internal NIF loader. Do not call this module directly - use `Vastlint`
   # (Elixir) or `vastlint` (Erlang).
