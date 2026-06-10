@@ -35,7 +35,7 @@
 %% than `null` or `nil`. This is idiomatic Erlang.
 
 -module(vastlint).
--export([validate/1, validate_with_opts/4, version/0]).
+-export([validate/1, validate_batch/1, validate_with_opts/4, version/0]).
 
 %% @doc Validate a VAST XML binary using default settings.
 %%
@@ -60,6 +60,13 @@ validate(Xml) ->
     {ok, map()} | {error, term()}.
 validate_with_opts(Xml, WrapperDepth, MaxWrapperDepth, RuleOverrides) ->
     vastlint_nif:validate_with_opts(Xml, WrapperDepth, MaxWrapperDepth, RuleOverrides).
+
+%% @doc Validate a list of VAST XML binaries in one NIF call.
+%%
+%% Returns a list of `{ok, Result}` / `{error, Reason}` tuples in input order.
+-spec validate_batch([binary()]) -> [{ok, map()} | {error, term()}].
+validate_batch(Xmls) ->
+    vastlint_nif:validate_batch(Xmls).
 
 %% @doc Return the vastlint-core version as a binary, e.g. <<"0.3.3">>.
 -spec version() -> binary().

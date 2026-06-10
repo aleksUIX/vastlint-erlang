@@ -17,8 +17,8 @@
 %%
 %% 2. Download a precompiled NIF for your platform and place it at
 %%
-%%      priv/vastlint_nif.so          (Linux)
-%%      priv/vastlint_nif.dylib       (macOS)
+%%      priv/native/vastlint_nif.so          (Linux)
+%%      priv/native/vastlint_nif.dylib       (macOS)
 %%
 %%    Precompiled tarballs are at:
 %%    https://github.com/aleksUIX/vastlint-erlang/releases/tag/v0.3.3
@@ -26,7 +26,7 @@
 %%    Or build from source (requires Rust ≥ 1.86):
 %%
 %%      cd native/vastlint_nif && cargo build --release
-%%      cp target/release/libvastlint_nif.{so,dylib} ../../priv/vastlint_nif.so
+%%      cp target/release/libvastlint_nif.{so,dylib} ../../priv/native/vastlint_nif.so
 %%
 %% ## Usage
 %%
@@ -36,7 +36,7 @@
 %%   Version = vastlint_nif:version().
 
 -module(vastlint_nif).
--export([validate/1, validate_with_opts/4, version/0]).
+-export([validate/1, validate_batch/1, validate_with_opts/4, version/0]).
 -on_load(init/0).
 
 %% @doc Load the NIF shared library from `priv/`.
@@ -54,8 +54,29 @@ init() ->
         Dir ->
             Dir
     end,
-    NifPath = filename:join(PrivDir, "vastlint_nif"),
+    NifPath = resolve_nif_path(PrivDir),
     erlang:load_nif(NifPath, 0).
+
+resolve_nif_path(PrivDir) ->
+    Candidates = [
+        filename:join([PrivDir, "native", "vastlint_nif"]),
+        filename:join(PrivDir, "vastlint_nif")
+    ],
+    resolve_nif_path(Candidates, hd(Candidates)).
+
+resolve_nif_path([Candidate | Rest], Fallback) ->
+    case nif_exists(Candidate) of
+        true -> Candidate;
+        false -> resolve_nif_path(Rest, Fallback)
+    end;
+resolve_nif_path([], Fallback) ->
+    Fallback.
+
+nif_exists(Path) ->
+    lists:any(fun(Extension) -> filelib:is_file(Path ++ Extension) end, nif_extensions()).
+
+nif_extensions() ->
+    [".so", ".dylib", ".dll"].
 
 %% @doc Validate a VAST XML binary using default settings.
 %%
@@ -81,6 +102,14 @@ init() ->
 %%   }
 -spec validate(binary()) -> {ok, map()} | {error, term()}.
 validate(_Xml) ->
+    erlang:nif_error({nif_not_loaded, vastlint_nif}).
+
+%% @doc Validate a batch of VAST XML binaries in one NIF call.
+%%
+%% Returns a list of `{ok, Result}` / `{error, Reason}` tuples in the same
+%% order as the input list.
+-spec validate_batch([binary()]) -> [{ok, map()} | {error, term()}].
+validate_batch(_Xmls) ->
     erlang:nif_error({nif_not_loaded, vastlint_nif}).
 
 %% @doc Validate a VAST XML binary with caller-supplied options.
