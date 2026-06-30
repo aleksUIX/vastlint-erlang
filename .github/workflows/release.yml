@@ -119,7 +119,7 @@ jobs:
 
       - name: Set up Elixir - Linux (erlef/setup-beam)
         if: runner.os == 'Linux'
-        uses: erlef/setup-beam@5304e04ea2b355f03681464e683d92e3b2f18451  # v1.18.2
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124  # v1.24.1
         with:
           otp-version: "27.3"
           elixir-version: "1.18"
@@ -228,7 +228,7 @@ jobs:
           key: publish-hex
 
       - name: Set up Elixir
-        uses: erlef/setup-beam@5304e04ea2b355f03681464e683d92e3b2f18451  # v1.18.2
+        uses: erlef/setup-beam@54075bcc5e249e4758d363f27d099f55d843f124  # v1.24.1
         with:
           otp-version: "27.3"
           elixir-version: "1.18"
