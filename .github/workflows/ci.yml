@@ -59,6 +59,14 @@ jobs:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
 
+      # Hex 2.5.0 bakes a precompiled regex into Hex.Cooldown that crashes
+      # with ":re.import/1 is undefined" when the archive is built under one
+      # OTP and run under another (PCRE vs RE2 backend switch in OTP 28).
+      # Pin to 2.4.2 until a fixed release lands (fix is merged upstream as
+      # of hex CHANGELOG v2.5.1-dev but not yet tagged).
+      - name: Pin Hex (2.5.0 crashes on OTP 28, see hexpm/hex CHANGELOG v2.5.1-dev)
+        run: mix local.hex 2.4.2 --force
+
       - name: Cache Mix deps
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684  # v4.2.3
         with:
