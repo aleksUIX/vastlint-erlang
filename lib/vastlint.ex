@@ -2,7 +2,7 @@ defmodule Vastlint do
   @moduledoc """
   High-performance VAST XML validator for Elixir and Erlang.
 
-  Validates IAB VAST 2.0–4.3 tags against 118 rules covering required
+  Validates IAB VAST 2.0–4.3 tags against 191 rules covering required
   elements, schema structure, security, deprecated features, and CTV
   advisories. Backed by `vastlint-core` (Rust) via a DirtyCpu NIF -
   validation never blocks BEAM schedulers regardless of tag size.

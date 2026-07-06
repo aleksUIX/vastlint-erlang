@@ -2,7 +2,7 @@
 
 Full reference documentation for every rule is at **[vastlint.org/docs/rules](https://vastlint.org/docs/rules/)**.
 
-118 rules across IAB VAST 2.0 – 4.3. The same rule set runs when you call `Vastlint.validate/1` (OTP port) or `:vastlint_nif.validate/1` (DirtyCpu NIF) — results include the rule ID, severity, line/column, and a spec reference so you can match them back to these docs.
+191 rules across IAB VAST 2.0 – 4.3. The same rule set runs when you call `Vastlint.validate/1` (OTP port) or `:vastlint_nif.validate/1` (DirtyCpu NIF); results include the rule ID, severity, line/column, and a spec reference so you can match them back to these docs.
 
 ```elixir
 {:ok, result} = Vastlint.validate(xml)
@@ -69,6 +69,10 @@ end
 | [VAST-2.0-duplicate-impression](https://vastlint.org/docs/rules/VAST-2.0-duplicate-impression/) | warning | Duplicate `<Impression>` URL within the same `<Ad>` |
 | [VAST-2.0-flash-mediafile](https://vastlint.org/docs/rules/VAST-2.0-flash-mediafile/) | warning | Flash MediaFile type is no longer supported |
 | [VAST-2.0-duration-format](https://vastlint.org/docs/rules/VAST-2.0-duration-format/) | error | Duration value does not match `HH:MM:SS[.mmm]` format |
+| [VAST-2.0-macro-unknown](https://vastlint.org/docs/rules/VAST-2.0-macro-unknown/) | warning | URL contains a `[MACRO]` that is not a recognised IAB VAST macro |
+| [VAST-2.0-macro-lowercase](https://vastlint.org/docs/rules/VAST-2.0-macro-lowercase/) | warning | Recognised macro is not uppercase — players match macro names case-sensitively |
+| [VAST-2.0-macro-wrong-context](https://vastlint.org/docs/rules/VAST-2.0-macro-wrong-context/) | info | Context-restricted macro (`[ERRORCODE]`/`[REASON]`) used where it has no defined value |
+| [VAST-2.0-macro-uri-unencoded](https://vastlint.org/docs/rules/VAST-2.0-macro-uri-unencoded/) | warning | Macro-bearing URL contains characters that must be percent-encoded per RFC 3986 |
 
 ---
 
@@ -109,6 +113,8 @@ end
 | [VAST-4.0-universaladid-idregistry](https://vastlint.org/docs/rules/VAST-4.0-universaladid-idregistry/) | error | `<UniversalAdId>` must have an `idRegistry` attribute |
 | [VAST-4.0-universaladid-idvalue](https://vastlint.org/docs/rules/VAST-4.0-universaladid-idvalue/) | error | `<UniversalAdId>` missing required `idValue` attribute (VAST 4.0) |
 | [VAST-4.0-category-authority](https://vastlint.org/docs/rules/VAST-4.0-category-authority/) | error | `<Category>` missing required `authority` attribute |
+| [VAST-4.0-category-authority-not-uri](https://vastlint.org/docs/rules/VAST-4.0-category-authority-not-uri/) | warning | `<Category>` `authority` attribute is not a valid authority URL |
+| [VAST-4.0-category-authority-unknown](https://vastlint.org/docs/rules/VAST-4.0-category-authority-unknown/) | info | `<Category>` `authority` is not a recognised IAB Content Taxonomy authority |
 | [VAST-4.0-companion-clicktracking-id](https://vastlint.org/docs/rules/VAST-4.0-companion-clicktracking-id/) | error | `<CompanionClickTracking>` missing required `id` attribute |
 | [VAST-4.0-wrapper-clickthrough](https://vastlint.org/docs/rules/VAST-4.0-wrapper-clickthrough/) | warning | `<ClickThrough>` inside Wrapper `<VideoClicks>` was removed in VAST 4.0 |
 | [VAST-4.0-conditionalad](https://vastlint.org/docs/rules/VAST-4.0-conditionalad/) | warning | `conditionalAd` attribute is deprecated as of VAST 4.1 |
@@ -128,6 +134,7 @@ end
 | [VAST-4.1-universaladid-content](https://vastlint.org/docs/rules/VAST-4.1-universaladid-content/) | error | `<UniversalAdId>` must have text content in VAST 4.1+ |
 | [VAST-4.1-adtype-value](https://vastlint.org/docs/rules/VAST-4.1-adtype-value/) | warning | `adType` must be `video`, `audio`, or `hybrid` |
 | [VAST-4.1-survey-deprecated](https://vastlint.org/docs/rules/VAST-4.1-survey-deprecated/) | warning | `<Survey>` is deprecated as of VAST 4.1 |
+| [VAST-4.1-macro-deprecated](https://vastlint.org/docs/rules/VAST-4.1-macro-deprecated/) | info | `[CONTENTPLAYHEAD]`/`[MEDIAPLAYHEAD]` are deprecated as of VAST 4.1 — use `[ADPLAYHEAD]` |
 | [VAST-4.1-vpaid-apiframework](https://vastlint.org/docs/rules/VAST-4.1-vpaid-apiframework/) | warning | VPAID is deprecated as of VAST 4.1 |
 | [VAST-4.1-vpaid-in-interactive-context](https://vastlint.org/docs/rules/VAST-4.1-vpaid-in-interactive-context/) | warning | VPAID `<MediaFile>` alongside `<InteractiveCreativeFile>` — unsupported in CTV |
 | [VAST-4.1-interactive-creative-type](https://vastlint.org/docs/rules/VAST-4.1-interactive-creative-type/) | warning | `<InteractiveCreativeFile>` should have a `type` attribute |
@@ -142,6 +149,8 @@ end
 | [VAST-4.1-exec-resource-apiframework](https://vastlint.org/docs/rules/VAST-4.1-exec-resource-apiframework/) | error | `<ExecutableResource>` missing required `apiFramework` attribute |
 | [VAST-4.1-exec-resource-type](https://vastlint.org/docs/rules/VAST-4.1-exec-resource-type/) | error | `<ExecutableResource>` missing required `type` attribute |
 | [VAST-4.1-blockedadcategories-no-authority](https://vastlint.org/docs/rules/VAST-4.1-blockedadcategories-no-authority/) | warning | `<BlockedAdCategories>` should have an `authority` attribute |
+| [VAST-4.1-blockedadcategories-authority-not-uri](https://vastlint.org/docs/rules/VAST-4.1-blockedadcategories-authority-not-uri/) | warning | `<BlockedAdCategories>` `authority` attribute is not a valid authority URL |
+| [VAST-4.1-blockedadcategories-authority-unknown](https://vastlint.org/docs/rules/VAST-4.1-blockedadcategories-authority-unknown/) | info | `<BlockedAdCategories>` `authority` is not a recognised IAB Content Taxonomy authority |
 | [VAST-4.1-tracking-event-value](https://vastlint.org/docs/rules/VAST-4.1-tracking-event-value/) | error | `event` attribute not in the valid set for this VAST version |
 | [VAST-4.1-companion-renderingmode-value](https://vastlint.org/docs/rules/VAST-4.1-companion-renderingmode-value/) | warning | `renderingMode` must be `default`, `end-card`, or `concurrent` |
 

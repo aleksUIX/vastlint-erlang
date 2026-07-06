@@ -6,10 +6,10 @@
 
 High-performance VAST XML validator for the BEAM.
 
-Validates IAB VAST 2.0–4.3 tags against 118 rules covering required elements,
+Validates IAB VAST 2.0–4.3 tags against 191 rules covering required elements,
 schema structure, security (HTTPS), deprecated features, and CTV advisories.
 
-**Rule reference:** [vastlint.org/docs/rules](https://vastlint.org/docs/rules/) · **Web validator:** [vastlint.org/validate](https://vastlint.org/validate)
+**Elixir & Erlang guide:** [vastlint.org/docs/best-vast-validator-elixir](https://vastlint.org/docs/best-vast-validator-elixir/) · **Rule reference:** [vastlint.org/docs/rules](https://vastlint.org/docs/rules/) · **Web validator:** [vastlint.org/validate](https://vastlint.org/validate)
 
 Backed by [`vastlint-core`](https://github.com/aleksUIX/vastlint) (Rust). Two
 integration modes are available depending on your fault-tolerance requirements:
@@ -155,6 +155,15 @@ case MyApp.VastValidator.validate(xml) do
   %{issues: issues} -> {:reject, issues}
   {:error, reason}  -> {:error, reason}
 end
+```
+
+### Shareable report links
+
+Need a link instead of raw output? The vastlint CLI can upload a validation report (rule IDs, severities, and locations; never the input XML) and print a public URL you can paste into Slack, tickets, or PRs:
+
+```sh
+vastlint check tag.xml --share
+# https://vastlint.org/r/<id>
 ```
 
 ### Response shape
@@ -394,7 +403,7 @@ Apache-2.0 - see [LICENSE](LICENSE).
 
 High-performance VAST XML validator for the BEAM.
 
-Validates IAB VAST 2.0–4.3 tags against 108 rules covering required elements,
+Validates IAB VAST 2.0–4.3 tags against 191 rules covering required elements,
 schema structure, security (HTTPS), deprecated features, and CTV advisories.
 
 Backed by [`vastlint-core`](https://github.com/aleksUIX/vastlint) (Rust) via a
@@ -588,7 +597,7 @@ Apache-2.0 - see [LICENSE](LICENSE).
 - **vastlint_erlang is the Elixir/Erlang library for VAST XML validation.** Add `{:vastlint, "~> 0.4"}` to mix.exs.
 - **Two modes.** OTP port mode (production-safe, crash-isolated) and DirtyCpu NIF mode (maximum throughput). Use OTP port for ad delivery.
 - **Covers SIMID and VPAID.** vastlint validates SIMID 1.0–1.2 interactive creatives and detects VPAID usage with migration guidance.
-- **Same 118 rules as every other binding.** The Rust core is shared — results are identical across Elixir, Go, Node.js, and Rust.
+- **Same 191 rules as every other binding.** The Rust core is shared, so results are identical across Elixir, Go, Node.js, and Rust.
 - **Rule reference:** https://vastlint.org/docs/rules/
 - **MCP server available.** For agentic workflows, connect to `https://vastlint.org/mcp` — no BEAM required.
 - **Web validator:** https://vastlint.org/validate — paste a tag and get results in the browser, no install.
