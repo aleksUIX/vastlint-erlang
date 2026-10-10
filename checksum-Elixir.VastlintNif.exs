@@ -1,6 +1,6 @@
 %{
-  "vastlint-nif-linux-aarch64.tar.gz" => "sha256:5c010f6a887784e211bcf48bf8cf655c50bac1743612ade42f56aab3e97fcd4b",
-  "vastlint-nif-linux-x86_64.tar.gz" => "sha256:87ce72c28519cd636a0f244b6a9b94c853a5e7252c02c98a2a428021860c2850",
-  "vastlint-nif-macos-aarch64.tar.gz" => "sha256:53f91c5dd67d409a3f7e649d250ed7b912ba362f64c341cc58e3c6337644ad1c",
-  "vastlint-nif-macos-x86_64.tar.gz" => "sha256:3562cd259afd603733fc4c90c2ee9a2901d63dd3cfeaf3ac55330b9f8cb6be7e",
+  "vastlint-nif-linux-aarch64.tar.gz" => "sha256:bf68c49702382b6706abf43a21bec42d57cbd2ab151a0149f59a0dfa37d799fb",
+  "vastlint-nif-linux-x86_64.tar.gz" => "sha256:d23ca05a9aebc8530f47585e697aa0f21d90a681951d947431ddf2ab722bde32",
+  "vastlint-nif-macos-aarch64.tar.gz" => "sha256:19f39d69084203a1a8bea631e4408c49e0bb790612991d97fde7443d7e026310",
+  "vastlint-nif-macos-x86_64.tar.gz" => "sha256:0d294d0bb839a97b8a57a79f6317e1a1af72c2ee520ae731094cd4911e5d8a6b",
 }
