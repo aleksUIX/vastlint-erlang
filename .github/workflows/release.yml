@@ -269,6 +269,7 @@ jobs:
           git add checksum-vastlint_nif.exs
           git diff --staged --quiet || \
             git commit -m "chore: update NIF checksums for ${{ github.ref_name }}"
+          git pull --rebase origin main
           git push origin HEAD:main
 
       - name: Publish to Hex.pm
