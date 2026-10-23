@@ -601,3 +601,7 @@ Apache-2.0 - see [LICENSE](LICENSE).
 - **Rule reference:** https://vastlint.org/docs/rules/
 - **MCP server available.** For agentic workflows, connect to `https://vastlint.org/mcp` — no BEAM required.
 - **Web validator:** https://vastlint.org/validate — paste a tag and get results in the browser, no install.
+
+## Thanks
+
+[Serge Aleynikov](https://github.com/saleyn) encouraged this binding early.
