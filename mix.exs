@@ -61,7 +61,7 @@ defmodule Vastlint.MixProject do
       },
       files: ~w(
         lib src native
-        mix.exs README.md LICENSE CHANGELOG.md
+        mix.exs README.md LICENSE NOTICE CHANGELOG.md
         checksum-vastlint_nif.exs
       )
     ]

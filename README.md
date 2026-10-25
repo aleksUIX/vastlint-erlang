@@ -1,5 +1,7 @@
 # vastlint - Elixir & Erlang VAST XML validator
 
+Created by [Aleksander Sekowski](https://github.com/aleksUIX).
+
 [![Hex.pm](https://img.shields.io/hexpm/v/vastlint.svg)](https://hex.pm/packages/vastlint)
 [![Hex Docs](https://img.shields.io/badge/docs-hexdocs-blue.svg)](https://hexdocs.pm/vastlint)
 [![License](https://img.shields.io/hexpm/l/vastlint.svg)](LICENSE)
