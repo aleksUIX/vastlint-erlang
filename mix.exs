@@ -25,7 +25,8 @@ defmodule Vastlint.MixProject do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [extra_applications: [:logger]]
+    test_apps = if Mix.env() == :test, do: [:eunit, :common_test], else: []
+    [extra_applications: [:logger] ++ test_apps]
   end
 
   defp deps do
@@ -44,7 +45,7 @@ defmodule Vastlint.MixProject do
     """
     High-performance VAST XML linter for Elixir and Erlang.
 
-    Validates IAB VAST 2.0–4.3 tags for schema, security, deprecated feature,
+    Validates IAB VAST 2.0–4.4 tags for schema, security, deprecated feature,
     and CTV issues. Ships precompiled Rustler NIFs for major platforms with a
     source-build fallback when needed.
     """
@@ -57,11 +58,11 @@ defmodule Vastlint.MixProject do
       links: %{
         "GitHub" => @source_url,
         "vastlint.org" => "https://vastlint.org",
-        "Changelog" => "#{@source_url}/blob/main/CHANGELOG.md"
+        "Changelog" => "#{@source_url}/releases"
       },
       files: ~w(
         lib src native
-        mix.exs README.md LICENSE NOTICE CHANGELOG.md
+        mix.exs README.md CHANGELOG.md LICENSE NOTICE engine-release.json
         checksum-vastlint_nif.exs
       )
     ]
@@ -73,7 +74,7 @@ defmodule Vastlint.MixProject do
       source_url: @source_url,
       extras: ["README.md", "CHANGELOG.md", "LICENSE"],
       groups_for_modules: [
-        "Internals": [~r/:vastlint_nif/]
+        Internals: [~r/:vastlint_nif/]
       ]
     ]
   end

@@ -89,10 +89,17 @@ jobs:
       # NIF Rust source lives in the vastlint monorepo - check it out and
       # vendor the native crates into this repo so Hex packages remain
       # self-contained and never include symlinks.
+      - name: Select matching public engine release
+        id: engine
+        run: |
+          TAG="$(python3 scripts/engine-tag.py)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           repository: aleksUIX/vastlint
+          ref: ${{ steps.engine.outputs.tag }}
           path: vastlint-monorepo
 
       - name: Vendor native Rust sources for Hex package
@@ -204,10 +211,17 @@ jobs:
 
       # Compile from source so we never depend on downloading a precompiled NIF
       # (avoids nif_version mismatches between build-nif and publish runners).
+      - name: Select matching public engine release
+        id: engine
+        run: |
+          TAG="$(python3 scripts/engine-tag.py)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: aleksUIX/vastlint
+          ref: ${{ steps.engine.outputs.tag }}
           path: vastlint-monorepo
 
       - name: Vendor native Rust sources for Hex package

@@ -1,6 +1,6 @@
 defmodule :vastlint_nif do
   @moduledoc false
-  @version "0.4.23"
+  @version Mix.Project.config()[:version]
 
   # Internal NIF loader. Do not call this module directly - use `Vastlint`
   # (Elixir) or `vastlint` (Erlang).
@@ -20,8 +20,7 @@ defmodule :vastlint_nif do
   use RustlerPrecompiled,
     otp_app: :vastlint,
     crate: "vastlint_nif",
-    base_url:
-      "https://github.com/aleksUIX/vastlint-erlang/releases/download/v#{@version}",
+    base_url: "https://github.com/aleksUIX/vastlint-erlang/releases/download/v#{@version}",
     version: @version,
     force_build: System.get_env("VASTLINT_BUILD") == "true",
     targets: [
@@ -37,8 +36,10 @@ defmodule :vastlint_nif do
   # crashing with an opaque UndefinedFunctionError.
 
   def validate(_xml), do: :erlang.nif_error(:nif_not_loaded)
+
   def validate_with_opts(_xml, _wrapper_depth, _max_wrapper_depth, _rule_overrides),
     do: :erlang.nif_error(:nif_not_loaded)
+
   def validate_batch(_xmls), do: :erlang.nif_error(:nif_not_loaded)
   def version(), do: :erlang.nif_error(:nif_not_loaded)
 end

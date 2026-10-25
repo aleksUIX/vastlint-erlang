@@ -33,10 +33,17 @@ jobs:
 
       # The NIF Rust source lives in the vastlint monorepo, not in this repo.
       # Check it out alongside so VASTLINT_BUILD=true can run cargo build.
+      - name: Select matching public engine release
+        id: engine
+        run: |
+          TAG="$(python3 scripts/engine-tag.py)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           repository: aleksUIX/vastlint
+          ref: ${{ steps.engine.outputs.tag }}
           path: vastlint-monorepo
 
       - name: Create native/vastlint_nif symlink
@@ -92,18 +99,11 @@ jobs:
       - name: Common Test suite
         env:
           VASTLINT_BUILD: "true"
-        run: mix test test/vastlint_SUITE.erl || true
-        # CT is run best via rebar3; mix test handles .erl via ct_run shim.
-        # Failures here are informational - CT results are also checked below.
+          MIX_ENV: test
+        run: mix run scripts/check_erlang.exs ct
 
-      - name: rebar3 eunit + ct
+      - name: Erlang EUnit
         env:
           VASTLINT_BUILD: "true"
-        run: |
-          # Install rebar3 if not present
-          if ! command -v rebar3 &>/dev/null; then
-            curl -fsSL https://s3.amazonaws.com/rebar3/rebar3 -o /usr/local/bin/rebar3
-            chmod +x /usr/local/bin/rebar3
-          fi
-          rebar3 eunit || true
-          rebar3 ct || true
+          MIX_ENV: test
+        run: mix run scripts/check_erlang.exs eunit
