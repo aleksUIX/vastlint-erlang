@@ -1,6 +1,6 @@
 %{
-  "libvastlint_nif-v0.15.3-nif-2.17-aarch64-unknown-linux-gnu.so.tar.gz" => "sha256:7999044d1ef1422d8fd0311908dcd19dc63899e1602a8718d3ec9114f8d7f598",
-  "libvastlint_nif-v0.15.3-nif-2.17-x86_64-unknown-linux-gnu.so.tar.gz" => "sha256:32a2b2a6e81bc0abf29de294401c8ab65edc71e033f250f2a885f75581389ee3",
-  "libvastlint_nif-v0.15.3-nif-2.18-aarch64-apple-darwin.so.tar.gz" => "sha256:b589f40c4b54c5b05f2fc525474512eb07986a83abb89d94ee1a56357720cdcd",
-  "libvastlint_nif-v0.15.3-nif-2.18-x86_64-apple-darwin.so.tar.gz" => "sha256:72c8f9c3b6b64cad36167177d5649e7d433e57b450a088f2189f4a99dcba4ee0",
+  "libvastlint_nif-v0.16.0-nif-2.17-aarch64-unknown-linux-gnu.so.tar.gz" => "sha256:efa47f6923effd6c73baba7315694f8da2ef9c8c645358a741c237ef2a954455",
+  "libvastlint_nif-v0.16.0-nif-2.17-x86_64-unknown-linux-gnu.so.tar.gz" => "sha256:741ded76d2aba4ffe880f6a36fa53709d2c72d0cf7d52ebb53d4b2a6a80d90c2",
+  "libvastlint_nif-v0.16.0-nif-2.18-aarch64-apple-darwin.so.tar.gz" => "sha256:c91fd355ceb668e65ed833300c0ec4a17bdcb1fd850dacd96ae0878b1727876c",
+  "libvastlint_nif-v0.16.0-nif-2.18-x86_64-apple-darwin.so.tar.gz" => "sha256:96406fba4e61f0ab02cea119c4660e5a1c6f5d696edfe1f762034e7cd645fd27",
 }
