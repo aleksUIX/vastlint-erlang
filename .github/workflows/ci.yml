@@ -107,3 +107,6 @@ jobs:
           VASTLINT_BUILD: "true"
           MIX_ENV: test
         run: mix run scripts/check_erlang.exs eunit
+
+      - name: Install the release-format precompiled NIF
+        run: python3 scripts/check_precompiled.py

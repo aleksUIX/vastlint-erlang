@@ -22,6 +22,7 @@ defmodule :vastlint_nif do
     crate: "vastlint_nif",
     base_url: "https://github.com/aleksUIX/vastlint-erlang/releases/download/v#{@version}",
     version: @version,
+    nif_versions: ["2.15"],
     force_build: System.get_env("VASTLINT_BUILD") == "true",
     targets: [
       "aarch64-apple-darwin",

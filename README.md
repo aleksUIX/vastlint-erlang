@@ -6,19 +6,9 @@ In-process validation of VAST 2.0–4.4, VMAP and DAAST using the public [VASTli
 
 ## Install a published Hex package.
 
-Find available versions on [Hex](https://hex.pm/packages/vastlint) and use the matching [HexDocs](https://hexdocs.pm/vastlint). The repository source can be ahead of the published package. The published 0.16 series can be installed with:
+Available versions are listed on [Hex](https://hex.pm/packages/vastlint), with API docs on [HexDocs](https://hexdocs.pm/vastlint). The published 0.16.0 package has stale loader metadata and incompatible precompiled archive names and contents. Use the source-build instructions below until the coordinated patch release publishes corrected artifacts.
 
-```elixir
-def deps do
-  [{:vastlint, "~> 0.16.0"}]
-end
-```
-
-```sh
-mix deps.get
-```
-
-Precompiled NIFs cover macOS and GNU/Linux on arm64 and x86_64. The loader takes its artifact version from `mix.exs`; `engine-release.json` pins the matching public source release; `checksum-vastlint_nif.exs` verifies downloaded archives. A source build requires the corresponding public engine checkout and Rust.
+The corrected release path packages the library under the exact filename expected by RustlerPrecompiled, using the library's NIF ABI 2.15 rather than the build host's OTP version. The loader takes its engine version from `mix.exs`; `engine-release.json` pins the matching public source release. The checksum file verifies the binding release archives. A source build requires the corresponding public engine checkout and Rust.
 
 ## Validate from Elixir.
 
@@ -71,7 +61,7 @@ VASTLINT_BUILD=true mix test
 MIX_ENV=test VASTLINT_BUILD=true mix run scripts/check_erlang.exs
 ```
 
-CI compiles the NIF from the public engine source. Tests cover validation, options, malformed input, concurrency and property-based input generation. Erlang EUnit and Common Test suites are included in `test/`.
+CI compiles the NIF from the public engine source. Tests cover validation, options, malformed input, concurrency and property-based input generation. Erlang EUnit and Common Test suites are included in `test/`. After building the NIF, `python3 scripts/check_precompiled.py` packages it with the real release helper and verifies download, checksum, loading and validation in a fresh consumer project without native source. CI requires this check.
 
 ## Package and release metadata stay together.
 

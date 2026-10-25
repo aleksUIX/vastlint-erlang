@@ -160,9 +160,6 @@ jobs:
           TARGET="${{ matrix.target }}"
           VERSION=$(grep '^version' vastlint-monorepo/crates/vastlint-nif/Cargo.toml \
             | head -1 | sed 's/.*"\(.*\)".*/\1/')
-          NIF_VERSION=$(erl -noshell \
-            -eval 'io:format("~s",[erlang:system_info(nif_version)]),halt()')
-
           # macOS produces a dylib; Linux produces an so.
           if [[ "$TARGET" == *"apple"* ]]; then
             ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.dylib"
@@ -170,14 +167,7 @@ jobs:
             ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.so"
           fi
 
-          # RustlerPrecompiled naming convention:
-          #   lib{crate}-v{version}-nif-{nif_version}-{target}.so.tar.gz
-          # The .so extension is always used in the tarball name (even on macOS).
-          # Inside the tarball the file is named libvastlint_nif.so.
-          TARBALL="libvastlint_nif-v${VERSION}-nif-${NIF_VERSION}-${TARGET}.so.tar.gz"
-          mkdir -p /tmp/nif_pkg
-          cp "$ARTIFACT" /tmp/nif_pkg/libvastlint_nif.so
-          tar -czf "$TARBALL" -C /tmp/nif_pkg libvastlint_nif.so
+          TARBALL="$(bash scripts/package-nif.sh "$ARTIFACT" "$VERSION" "$TARGET" .)"
           echo "Packaged: $TARBALL"
           echo "TARBALL_NAME=$TARBALL" >> "$GITHUB_ENV"
 
