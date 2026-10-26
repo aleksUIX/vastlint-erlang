@@ -13,7 +13,9 @@ import tempfile
 import threading
 
 root = Path(__file__).resolve().parent.parent
-version = json.loads((root / "engine-release.json").read_text())["release_tag"][1:]
+provenance = json.loads((root / "engine-release.json").read_text())
+version = provenance["release_tag"][1:]
+reported_version = provenance["nif_crate_version"]
 targets = {
     ("Darwin", "arm64"): "aarch64-apple-darwin",
     ("Darwin", "x86_64"): "x86_64-apple-darwin",
@@ -59,7 +61,7 @@ with tempfile.TemporaryDirectory(prefix="vastlint-precompiled-") as temporary:
             environment.pop(variable, None)
         subprocess.run(["mix", "deps.compile"], cwd=project, env=environment, check=True)
         expression = (
-            f'if Vastlint.version() != "{version}", do: raise("wrong engine version"); '
+            f'if Vastlint.version() != "{reported_version}", do: raise("wrong NIF crate version"); '
             '{:ok, result} = Vastlint.validate(File.read!("valid.xml")); '
             'if not result.valid, do: raise("valid fixture rejected")'
         )

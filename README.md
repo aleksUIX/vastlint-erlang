@@ -6,7 +6,7 @@ In-process validation of VAST 2.0–4.4, VMAP and DAAST using the public [VASTli
 
 ## Install a published Hex package.
 
-Available versions are listed on [Hex](https://hex.pm/packages/vastlint), with API docs on [HexDocs](https://hexdocs.pm/vastlint). The published 0.16.0 package has stale loader metadata and incompatible precompiled archive names and contents. Use the source-build instructions below until the coordinated patch release publishes corrected artifacts.
+Available versions are listed on [Hex](https://hex.pm/packages/vastlint), with API docs on [HexDocs](https://hexdocs.pm/vastlint). The published 0.16.1 package has stale loader metadata and incompatible precompiled archive names and contents. Use the source-build instructions below until the coordinated patch release publishes corrected artifacts.
 
 The corrected release path packages the library under the exact filename expected by RustlerPrecompiled, using the library's NIF ABI 2.15 rather than the build host's OTP version. The loader takes its engine version from `mix.exs`; `engine-release.json` pins the matching public source release. The checksum file verifies the binding release archives. A source build requires the corresponding public engine checkout and Rust.
 
@@ -68,3 +68,5 @@ CI compiles the NIF from the public engine source. Tests cover validation, optio
 `mix.exs`, the loader artifact version and `checksum-vastlint_nif.exs` must describe the same release. The release workflow vendors the public core and NIF Rust sources for Hex source-build fallback. Engine publication and binding publication remain separate credential operations. No marketplace account or private application source is required to build the library.
 
 Licensed under [Apache 2.0](LICENSE). Preserve [NOTICE](NOTICE) when redistributing. Report engine issues to [vastlint](https://github.com/aleksUIX/vastlint/issues), and binding issues to [vastlint-erlang](https://github.com/aleksUIX/vastlint-erlang/issues).
+
+The v0.16.1 engine source tag contains NIF crate 0.16.0, which is what `Vastlint.version/0` currently reports. `engine-release.json` records the source release, commit, archive hashes and NIF crate version separately. The installation check verifies that reported crate version as well as loading and validation.
