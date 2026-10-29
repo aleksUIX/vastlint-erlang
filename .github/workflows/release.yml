@@ -89,10 +89,17 @@ jobs:
       # NIF Rust source lives in the vastlint monorepo - check it out and
       # vendor the native crates into this repo so Hex packages remain
       # self-contained and never include symlinks.
+      - name: Select matching public engine release
+        id: engine
+        run: |
+          TAG="$(python3 scripts/engine-tag.py)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           repository: aleksUIX/vastlint
+          ref: ${{ steps.engine.outputs.tag }}
           path: vastlint-monorepo
 
       - name: Vendor native Rust sources for Hex package
@@ -153,9 +160,6 @@ jobs:
           TARGET="${{ matrix.target }}"
           VERSION=$(grep '^version' vastlint-monorepo/crates/vastlint-nif/Cargo.toml \
             | head -1 | sed 's/.*"\(.*\)".*/\1/')
-          NIF_VERSION=$(erl -noshell \
-            -eval 'io:format("~s",[erlang:system_info(nif_version)]),halt()')
-
           # macOS produces a dylib; Linux produces an so.
           if [[ "$TARGET" == *"apple"* ]]; then
             ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.dylib"
@@ -163,14 +167,7 @@ jobs:
             ARTIFACT="vastlint-monorepo/target/${TARGET}/release/libvastlint_nif.so"
           fi
 
-          # RustlerPrecompiled naming convention:
-          #   lib{crate}-v{version}-nif-{nif_version}-{target}.so.tar.gz
-          # The .so extension is always used in the tarball name (even on macOS).
-          # Inside the tarball the file is named libvastlint_nif.so.
-          TARBALL="libvastlint_nif-v${VERSION}-nif-${NIF_VERSION}-${TARGET}.so.tar.gz"
-          mkdir -p /tmp/nif_pkg
-          cp "$ARTIFACT" /tmp/nif_pkg/libvastlint_nif.so
-          tar -czf "$TARBALL" -C /tmp/nif_pkg libvastlint_nif.so
+          TARBALL="$(bash scripts/package-nif.sh "$ARTIFACT" "$VERSION" "$TARGET" .)"
           echo "Packaged: $TARBALL"
           echo "TARBALL_NAME=$TARBALL" >> "$GITHUB_ENV"
 
@@ -204,10 +201,17 @@ jobs:
 
       # Compile from source so we never depend on downloading a precompiled NIF
       # (avoids nif_version mismatches between build-nif and publish runners).
+      - name: Select matching public engine release
+        id: engine
+        run: |
+          TAG="$(python3 scripts/engine-tag.py)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
       - name: Checkout vastlint monorepo (NIF source)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           repository: aleksUIX/vastlint
+          ref: ${{ steps.engine.outputs.tag }}
           path: vastlint-monorepo
 
       - name: Vendor native Rust sources for Hex package

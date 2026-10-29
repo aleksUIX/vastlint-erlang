@@ -9,24 +9,12 @@
 %% the same Erlang atom (`vastlint_nif`) so the same `.so` / `.dylib` serves
 %% both ecosystems.
 %%
-%% ## Setup for rebar3
+%% ## Setup for pure Erlang hosts
 %%
-%% 1. Add the dependency to `rebar.config`:
-%%
-%%      {deps, [{vastlint, "0.3.3", {hex, vastlint}}]}.
-%%
-%% 2. Download a precompiled NIF for your platform and place it at
-%%
-%%      priv/native/vastlint_nif.so          (Linux)
-%%      priv/native/vastlint_nif.dylib       (macOS)
-%%
-%%    Precompiled tarballs are at:
-%%    https://github.com/aleksUIX/vastlint-erlang/releases/tag/v0.3.3
-%%
-%%    Or build from source (requires Rust ≥ 1.86):
-%%
-%%      cd native/vastlint_nif && cargo build --release
-%%      cp target/release/libvastlint_nif.{so,dylib} ../../priv/native/vastlint_nif.so
+%% See README.md for the current package and loader setup. Use the NIF
+%% archive from the matching binding release, or build the matching public
+%% engine source. Install the shared library at priv/native/vastlint_nif.so
+%% (or .dylib on macOS). Mix applications use the Elixir loader instead.
 %%
 %% ## Usage
 %%
