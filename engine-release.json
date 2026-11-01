@@ -1,0 +1,23 @@
+{
+  "engine_repository": "https://github.com/aleksUIX/vastlint",
+  "release_tag": "v0.16.3",
+  "commit": "7bb988b8714b66d365b78d27222c489054f886f6",
+  "archives": [
+    {
+      "name": "vastlint-nif-linux-aarch64.tar.gz",
+      "sha256": "07772e769e8692bb7cc581812b73087e92dfd4f31cdc13d0d289afbc501a1980"
+    },
+    {
+      "name": "vastlint-nif-linux-x86_64.tar.gz",
+      "sha256": "bab1f19ed7546c85ea75f89dca6a0f7281fb20020fade02e7b749d8ee3841404"
+    },
+    {
+      "name": "vastlint-nif-macos-aarch64.tar.gz",
+      "sha256": "ead5676ca061710f3e0ebd3cd7d5794712dd113f2c64c0a497369bb11a4e1c2f"
+    },
+    {
+      "name": "vastlint-nif-macos-x86_64.tar.gz",
+      "sha256": "92407302377b68c0d531fc84ecd755d3b8689066ef435ad238f9bb589e602e5a"
+    }
+  ]
+}
