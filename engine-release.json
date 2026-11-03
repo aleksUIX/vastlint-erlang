@@ -1,24 +1,24 @@
 {
   "engine_repository": "https://github.com/aleksUIX/vastlint",
-  "release_tag": "v0.16.2",
-  "commit": "f05fd0d65dcdd2a978faac0df4ed1a2558fdc8c1",
+  "release_tag": "v0.16.4",
+  "commit": "fd59b46cbaa4350e515890731e89e8c06f94b73b",
   "archives": [
     {
       "name": "vastlint-nif-linux-aarch64.tar.gz",
-      "sha256": "1316a618d8647b5c2ea5ae614fa82353c092642a77c504a003c7a663eb2d87e2"
+      "sha256": "e5cf08438dec29594e727a178d44201ee931082198c869c9799799c27d79611f"
     },
     {
       "name": "vastlint-nif-linux-x86_64.tar.gz",
-      "sha256": "5d20f8316a146c0a14d7b12c0829b490d52d99c003527af2fb35706d27ddc5d6"
+      "sha256": "2f65cd261a00ee2cc43aab11cf3c4fec01a4a833387d590c3f2a2bf01e9eeab3"
     },
     {
       "name": "vastlint-nif-macos-aarch64.tar.gz",
-      "sha256": "7c483a6a8d391506161f774b5aec01ee74b037acbb90b2824a7121cfde84fcb2"
+      "sha256": "8fc6101b291df7ed6d36e1521b13da1a763fa6f259c2a7a51264cebe34099ccc"
     },
     {
       "name": "vastlint-nif-macos-x86_64.tar.gz",
-      "sha256": "c6d0dfcfc4b860acecc054cc36eee88cc3486b00a025f16e29e2be47567fc6d3"
+      "sha256": "5016d15a87e301534cd62e979ada0547a5f32478c6dd037ddd5bc85d1aeee0b2"
     }
   ],
-  "nif_crate_version": "0.16.2"
+  "nif_crate_version": "0.16.4"
 }
