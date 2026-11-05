@@ -210,8 +210,8 @@ opts_empty_equals_default(Config) ->
     Xml = load(Config, "valid_wrapper_42.xml"),
     {ok, R1} = vastlint:validate(Xml),
     {ok, R2} = vastlint:validate_with_opts(Xml, 0, 0, #{}),
-    maps:get(valid,   R1) = maps:get(valid,   R2),
-    maps:get(errors,  R1) = maps:get(errors,  R2).
+    ?assertEqual(maps:get(valid, R1), maps:get(valid, R2)),
+    ?assertEqual(maps:get(errors, R1), maps:get(errors, R2)).
 
 opts_wrapper_depth_accepted(Config) ->
     Xml = load(Config, "valid_wrapper_42.xml"),

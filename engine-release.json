@@ -19,5 +19,6 @@
       "name": "vastlint-nif-macos-x86_64.tar.gz",
       "sha256": "5016d15a87e301534cd62e979ada0547a5f32478c6dd037ddd5bc85d1aeee0b2"
     }
-  ]
+  ],
+  "nif_crate_version": "0.16.4"
 }

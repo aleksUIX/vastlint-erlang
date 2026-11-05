@@ -8,3 +8,5 @@ bench/reports/
 
 # Local symlink to Rust monorepo - not portable across machines
 native/vastlint_nif
+native/vastlint-core
+.DS_Store
