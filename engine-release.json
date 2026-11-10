@@ -1,6 +1,7 @@
 {
   "engine_repository": "https://github.com/aleksUIX/vastlint",
   "release_tag": "v0.16.5",
+  "nif_crate_version": "0.16.5",
   "commit": "4f0e51b46d5d1235c24f32f773f1aa3819e0090f",
   "archives": [
     {
