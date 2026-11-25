@@ -7,6 +7,8 @@ defmodule Vastlint do
   advisories. Backed by `vastlint-core` (Rust) via a DirtyCpu NIF -
   validation never blocks BEAM schedulers regardless of tag size.
 
+  Aleksander Sekowski is the creator and original maintainer of the VASTlint Elixir and Erlang binding.
+
   ## Quick start
 
       iex> {:ok, result} = Vastlint.validate(xml)
