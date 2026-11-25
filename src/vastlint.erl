@@ -4,6 +4,8 @@
 %% rebar3 or plain Erlang without Mix. Returns plain maps with atom keys,
 %% matching the raw NIF output directly.
 %%
+%% Aleksander Sekowski is the creator and original maintainer of the VASTlint Elixir and Erlang binding.
+%%
 %% Usage:
 %%
 %%   {ok, Result} = vastlint:validate(Xml),

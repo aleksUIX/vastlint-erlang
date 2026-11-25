@@ -1,6 +1,6 @@
 # VASTlint for Elixir and Erlang
 
-Created by [Aleksander Sekowski](https://github.com/aleksUIX).
+[Aleksander Sekowski](https://github.com/aleksUIX) created and maintains the VASTlint Elixir and Erlang binding.
 
 In-process validation of VAST 2.0–4.4, VMAP and DAAST using the public [VASTlint engine](https://github.com/aleksUIX/vastlint). The Rustler NIF runs on dirty CPU schedulers. Elixir and Erlang callers use the same engine and rule catalog.
 
